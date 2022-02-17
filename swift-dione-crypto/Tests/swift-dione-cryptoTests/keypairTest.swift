@@ -11,7 +11,6 @@ import swift_dione_crypto
 
 class keypairTest: XCTestCase {
     var testPair: P256DhKeypair = P256DhKeypair()
-    var securePair: P256SecureDhKeypair = P256SecureDhKeypair()
     var curvePair: Curve25519DhKeypair = Curve25519DhKeypair()
     
     override func setUpWithError() throws {
@@ -66,6 +65,7 @@ class keypairTest: XCTestCase {
         if !CryptoKit.SecureEnclave.isAvailable {
             throw XCTSkip("Secure Enclave not available, skipping")
         }
+        let securePair: P256SecureDhKeypair = P256SecureDhKeypair()
         let protoPair = securePair.ExportToProto()
         let importedPair = try! P256SecureDhKeypair.init(proto: protoPair)
         XCTAssertEqual(importedPair.publicKey.rawRepresentation, securePair.publicKey.rawRepresentation, "Public keys are not equal")
