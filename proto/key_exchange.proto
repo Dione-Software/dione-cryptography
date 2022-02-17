@@ -1,0 +1,15 @@
+syntax = "proto3";
+package key_exchange_proto;
+
+option go_package = "./key_exchange_proto";
+
+message PublicKey {
+  enum Curve {
+    P256 = 0;
+    Curve25519 = 1;
+  }
+  // Type of the curve
+  Curve curveType = 2;
+  // Public key data, encoded as bytes. With p256 this is ANSI x9.63.
+  bytes publicKeyData = 3;
+}
