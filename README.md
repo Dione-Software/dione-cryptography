@@ -1,0 +1,2 @@
+[![Swift](https://github.com/Dione-Software/dione-cryptography/actions/workflows/swift.yml/badge.svg)](https://github.com/Dione-Software/dione-cryptography/actions/workflows/swift.yml)
+[![Go](https://github.com/Dione-Software/dione-cryptography/actions/workflows/go.yml/badge.svg)](https://github.com/Dione-Software/dione-cryptography/actions/workflows/go.yml)
