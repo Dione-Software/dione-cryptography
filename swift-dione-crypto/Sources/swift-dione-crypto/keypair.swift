@@ -91,3 +91,82 @@ public struct P256DhKeypair: P256Dh, ProtoKeypair {
         }
     }
 }
+
+@available(macOS 10.15, *)
+public struct P256SecureDhKeypair: P256Dh, ProtoKeypair {
+    public func ComputeSharedSecret(pk: P256.KeyAgreement.PublicKey) throws -> SharedSecret {
+        do {
+            return try privateKey!.sharedSecretFromKeyAgreement(with: pk)
+        } catch {
+            throw error
+        }
+    }
+    
+    public func ExportToProto() -> KeyExchangeProto_PublicKey {
+        let unsafe_key_pair = P256DhKeypair.init(pk: publicKey)
+        return unsafe_key_pair.ExportToProto()
+    }
+    
+    public init(proto: KeyExchangeProto_PublicKey) throws {
+        do {
+            let unsafe_key_pair = try P256DhKeypair.init(proto: proto)
+            publicKey = unsafe_key_pair.publicKey
+            privateKey = nil
+        } catch {
+            throw error
+        }
+    }
+    
+    let type = CurveType.P256
+    let privateKey: CryptoKit.SecureEnclave.P256.KeyAgreement.PrivateKey?
+    public let publicKey: CryptoKit.P256.KeyAgreement.PublicKey
+    
+    public init() {
+        privateKey = try! CryptoKit.SecureEnclave.P256.KeyAgreement.PrivateKey()
+        publicKey = privateKey!.publicKey
+    }
+}
+
+@available(macOS 10.15, *)
+public struct Curve25519DhKeypair: ProtoKeypair {
+    public func ExportToProto() -> KeyExchangeProto_PublicKey {
+        var ret = KeyExchangeProto_PublicKey()
+        ret.publicKeyData = publicKey.rawRepresentation
+        ret.curveType = KeyExchangeProto_PublicKey.Curve.curve25519
+        return ret
+    }
+    
+    public init(proto: KeyExchangeProto_PublicKey) throws {
+        let protoData = proto.publicKeyData
+        var publicKey = Curve25519.KeyAgreement.PrivateKey().publicKey
+        do {
+            publicKey = try Curve25519.KeyAgreement.PublicKey.init(rawRepresentation: protoData)
+        } catch {
+            throw error
+        }
+        self.publicKey = publicKey
+        self.privateKey = nil
+    }
+    
+    public func ComputeSharedSecret(pk: Curve25519.KeyAgreement.PublicKey) throws -> SharedSecret {
+        do {
+            return try privateKey!.sharedSecretFromKeyAgreement(with: pk)
+        } catch {
+            throw error
+        }
+    }
+    
+    let type = CurveType.Curve25519
+    let privateKey: CryptoKit.Curve25519.KeyAgreement.PrivateKey?
+    public let publicKey: CryptoKit.Curve25519.KeyAgreement.PublicKey
+    
+    public init() {
+        privateKey = Curve25519.KeyAgreement.PrivateKey()
+        publicKey = privateKey!.publicKey
+    }
+    
+    public init(pk: Curve25519.KeyAgreement.PublicKey) {
+        privateKey = nil
+        publicKey = pk
+    }
+}
