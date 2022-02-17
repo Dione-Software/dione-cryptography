@@ -3,8 +3,10 @@ name: Swift
 on:
   push:
     branches: [ main ]
+    paths: "swift-dione-crypto"
   pull_request:
     branches: [ main ]
+    paths: "swift-dione-crypto"
 
 jobs:
   build:
