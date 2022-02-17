@@ -48,7 +48,7 @@ class keypairTest: XCTestCase {
     
     func testP256DhSecureKeypair() throws {
         if !CryptoKit.SecureEnclave.isAvailable {
-            throws XCTSkip("Secure Enclave not available, skipping")
+            throw XCTSkip("Secure Enclave not available, skipping")
         }
         let pairA = P256SecureDhKeypair()
         let pairB = P256SecureDhKeypair()
@@ -64,7 +64,7 @@ class keypairTest: XCTestCase {
     
     func testP256DhSecureKeypairProto() throws {
         if !CryptoKit.SecureEnclave.isAvailable {
-            throws XCTSkip("Secure Enclave not available, skipping")
+            throw XCTSkip("Secure Enclave not available, skipping")
         }
         let protoPair = securePair.ExportToProto()
         let importedPair = try! P256SecureDhKeypair.init(proto: protoPair)
