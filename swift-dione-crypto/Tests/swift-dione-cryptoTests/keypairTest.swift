@@ -9,7 +9,8 @@ import XCTest
 import swift_dione_crypto
 
 class keypairTest: XCTestCase {
-
+    var testPair: P256DhKeypair = P256DhKeypair()
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -29,6 +30,12 @@ class keypairTest: XCTestCase {
         self.measure {
             let _ = try! pairA.ComputeSharedSecret(pk: pubB)
         }
+    }
+    
+    func testP256DhKeypairProto() throws {
+        var protoPair = testPair.ExportToProto()
+        let importedPair = try! P256DhKeypair.init(proto: protoPair)
+        XCTAssertEqual(importedPair.publicKey.rawRepresentation, testPair.publicKey.rawRepresentation, "Public keys are not equal")
     }
 
 }

@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct KeyExchangeProto_PublicKey {
+public struct KeyExchangeProto_PublicKey {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -31,7 +31,7 @@ struct KeyExchangeProto_PublicKey {
   /// Public key data, encoded as bytes. With p256 this is ANSI x9.63.
   var publicKeyData: Data = Data()
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+    public  var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum Curve: SwiftProtobuf.Enum {
     typealias RawValue = Int
@@ -61,7 +61,7 @@ struct KeyExchangeProto_PublicKey {
 
   }
 
-  init() {}
+    public init() {}
 }
 
 #if swift(>=4.2)
@@ -81,13 +81,13 @@ extension KeyExchangeProto_PublicKey.Curve: CaseIterable {
 fileprivate let _protobuf_package = "key_exchange_proto"
 
 extension KeyExchangeProto_PublicKey: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".PublicKey"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    public static let protoMessageName: String = _protobuf_package + ".PublicKey"
+    public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     2: .same(proto: "curveType"),
     3: .same(proto: "publicKeyData"),
   ]
 
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    mutating public func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -100,7 +100,7 @@ extension KeyExchangeProto_PublicKey: SwiftProtobuf.Message, SwiftProtobuf._Mess
     }
   }
 
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if self.curveType != .p256 {
       try visitor.visitSingularEnumField(value: self.curveType, fieldNumber: 2)
     }
@@ -110,7 +110,7 @@ extension KeyExchangeProto_PublicKey: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: KeyExchangeProto_PublicKey, rhs: KeyExchangeProto_PublicKey) -> Bool {
+    public static func ==(lhs: KeyExchangeProto_PublicKey, rhs: KeyExchangeProto_PublicKey) -> Bool {
     if lhs.curveType != rhs.curveType {return false}
     if lhs.publicKeyData != rhs.publicKeyData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
