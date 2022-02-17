@@ -16,8 +16,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: swift build -v
+      run: swift build
       working-directory: swift-dione-crypto
     - name: Run tests
-      run: swift test -v
+      run: swift test
       working-directory: swift-dione-crypto
